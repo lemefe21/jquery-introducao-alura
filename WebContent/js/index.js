@@ -1,8 +1,6 @@
 var aposInicializado = function(){
 	var itens = $('.item-total');
-	var quantidade = $('.item-quantidade');
 	var total = 0;
-	var totalItens = 0;
 	
 	for(var i = 0; i < itens.length; i++){
 		
@@ -10,16 +8,32 @@ var aposInicializado = function(){
 		var valor = parseFloat(item);
 		total += valor;
 		
-		var textoQuantidade = $(quantidade[i]).text();
-        var quantidadeItem = parseFloat(textoQuantidade);
-        totalItens += quantidadeItem;
-		
 	}
 	
-	console.log("Valor total " + total);
+	//console.log("Valor total " + total);
 	
 	$('#valor-total').text(total);
-	$('#quantidade-itens').text(totalItens);
+	$('#quantidade-itens').text(itens.length);
+	$('.remove-item').click(removeItem);
+};
+
+var removeItem = function(event){
+	
+	//previne o comportamento padrão do link de redireciona para uma página
+	//nesse caso ela mesma
+	event.preventDefault();
+	
+	//click - função de callback
+	//this - link <a>, em objeto jquery $(this)
+	//closest é o selector de self
+	var self = $(this);
+	self.closest('tr').remove();
+	
+	var atual = parseInt($('#quantidade-itens').text());
+	var novaQuantidade = atual - 1;
+	
+	$('#quantidade-itens').text(novaQuantidade);
+	
 };
 
 //toda função passada ao JQuery dessa maneira será 
