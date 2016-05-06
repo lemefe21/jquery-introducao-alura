@@ -1,6 +1,8 @@
 var atualizaDados = function(){
 
-	var itens = $('.item-total');
+	//agora vamos contabilizar somente os itens que estão visible
+	//extenção de seletores
+	var itens = $('.item-total:visible');
 	var total = 0;
 	
 	for(var i = 0; i < itens.length; i++){
@@ -17,9 +19,23 @@ var atualizaDados = function(){
 	
 }
 
+var undo = function(){
+	
+	$('tr:visible').removeClass('recuperado');
+	
+	//tr's que estão hide
+	var trs = $('tr:hidden');
+	trs.addClass('recuperado'); //css
+	trs.show();
+	
+	atualizaDados();
+	
+}
+
 var aposInicializado = function(){
 	
 	atualizaDados();
+	$('#undo').click(undo);
 	$('.remove-item').click(removeItem);
 };
 
@@ -30,10 +46,10 @@ var removeItem = function(event){
 	event.preventDefault();
 	
 	//click - função de callback
-	//this - link <a>, em objeto jquery $(this)
+	//this - link <a>, em objeto jquery => $(this)
 	//closest é o selector de self
 	var self = $(this);
-	self.closest('tr').remove();
+	self.closest('tr').hide(); //display: none;
 	
 	/*var atual = parseInt($('#quantidade-itens').text());
 	var novaQuantidade = atual - 1;
