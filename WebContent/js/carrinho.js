@@ -1,8 +1,11 @@
 var daDestaque = function(){
+	//dentro do contexto procura o botão
+	$(this).find('.remove-item').fadeIn();
 	$(this).addClass('hovering');
 };
 
 var tiraDestaque = function(){
+	$(this).find('.remove-item').fadeOut();	
 	$(this).removeClass('hovering');
 };
 
@@ -60,6 +63,13 @@ var undo = function(){
 	
 }
 
+var alternaPropagandas = function(event){
+	event.preventDefault();
+	//tempo opcional toggle(5000); milli
+	$('.propaganda').fadeToggle();
+	$('.alterna-propaganda').toggle();
+}
+
 var aposInicializado = function(){
 	
 	atualizaDados();
@@ -81,6 +91,8 @@ var aposInicializado = function(){
 	
 	//os tr(filhos) que estão dentro do tbody
 	$('.carrinho tbody tr').hover(daDestaque, tiraDestaque);
+	
+	$('.alterna-propaganda').click(alternaPropagandas);
 	
 };
 
