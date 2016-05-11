@@ -1,5 +1,29 @@
+var daDestaque = function(){
+	$(this).addClass('hovering');
+};
+
+var tiraDestaque = function(){
+	$(this).removeClass('hovering');
+};
+
+var umaPropaganda = function(){
+	
+	var propagandas = ["O que acha de comprar uma motocicleta?",
+	                   "O que acha de comprar uma lancha?", 
+	                   "O que acha de comprar um carro?", 
+	                   "O que acha de comprar uma bicicleta?"];
+	
+	var posicao = Math.floor(propagandas.length * Math.random());
+	var tr = $('<tr>').addClass('propaganda').append($('<td>'));
+	tr.find('td').attr('colspan', 6).text(propagandas[posicao]);
+	
+	return tr;
+	
+};
+
 var atualizaDados = function(){
 	
+	//escopo mais específico
 	var carrinhos = $('.carrinho');
 	
 	carrinhos.each(function(){
@@ -41,6 +65,23 @@ var aposInicializado = function(){
 	atualizaDados();
 	$('.undo').click(undo);
 	$('.remove-item').click(removeItem);
+	
+	$('.carrinho').each(function(){
+		
+		//pares, impares e a cada x ou ultimo elemento
+		$(this).find('tr:nth-child(2n), tr:last').each(function(){
+			umaPropaganda().insertAfter($(this));
+		});
+		
+	});
+	
+	//parametro de entrada e saida do hover
+	//$('tr).on('mouseenter', daDestaque);
+	//$('tr').on('mouseleave', tiraDestaque);
+	
+	//os tr(filhos) que estão dentro do tbody
+	$('.carrinho tbody tr').hover(daDestaque, tiraDestaque);
+	
 };
 
 var removeItem = function(event){
